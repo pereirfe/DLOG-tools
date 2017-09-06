@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import math
 import peakutils
 import sys
-
+import re
 
 def powerAverages_10tti(filename, expected_pks, szofinput, debug):
     period = 2.048E-5 #s
@@ -84,7 +84,9 @@ def powerAverages_10tti(filename, expected_pks, szofinput, debug):
         mmean_ttix[i] = np.mean(mean_ttix_a[i])*4*1000 #Multiply by voltage*1000 => mW
 
     try:
-        varnum = int(filename.split('__')[1])
+        re_var = re.compile("_+\d+_+")
+        varnum = re_var.findall(filename)[-1]
+        #varnum = int(filename.split('__')[1])
     except:
         varnum = "NO_VAR"
 
